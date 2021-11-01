@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from '../../models/Todo'
+import { AddTodo } from '../../action/todo.actions';
+import { Store } from '@ngxs/store'
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-todos',
@@ -7,57 +9,17 @@ import { Todo } from '../../models/Todo'
   styleUrls: ['./todos.component.css']
 })
 export class TodosComponent implements OnInit {
-  todos:Todo[];
-  inputTodo:string = '';
+  constructor(private store: Store) { }
 
-  constructor() { }
+
+  addTodo(id, description, isCompleted) {
+    this.store.dispatch(new AddTodo({
+      id: id,
+      description:description,
+      isCompleted:isCompleted
+    }))
+  }
 
   ngOnInit(): void {
-
-    // List of pre defined todo's
-    this.todos = [
-      {
-      description: "first Todo",
-      isCompleted: false
-      },
-      {
-        description: "second Todo",
-        isCompleted: false
-      },
-      {
-        description: "thrid Todo",
-        isCompleted: false
-      },
-    ]
-  }
-
-  // Change the value of isCompleted
-  toggleIsCompleted(id) {
-    this.todos.map((v, i) => {
-      if (i == id) v.isCompleted = !v.isCompleted;
-
-      return v;
-    })
-  }
-
-  // Delete the todo
-  deleteTodo(id) {
-    this.todos = this.todos.filter((v, i) => i !== id)
-  }
-
-
-  // function add Todo
-  addTodo() {
-    // If nothing is entered, an alert is given
-    if(this.inputTodo == '') {
-      window.alert('please enter something...');
-    } else {
-      // Todo is being added to the list of todo's
-      this.todos.push({
-        description: this.inputTodo,
-        isCompleted: false
-      })
-      this.inputTodo = '';
-    }
   }
 }

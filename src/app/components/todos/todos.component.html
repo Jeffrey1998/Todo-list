@@ -1,26 +1,8 @@
 <div class="todos">
-    <form (submit)="addTodo()">
-        <!-- using Bootstrap to align the items for Add Todo-->
-        <div class="d-flex flex-row">
-        <input 
-            type="text" 
-            placeholder="Enter todo..."
-            name="inputTodo"
-            class="todo-input"
-            [(ngModel)]="inputTodo"
-        />
-
-        <input type="submit" value="Add todo" class="todo-submit">
-    </div>
-    </form>
-
-    <!-- Looping threw all the todo's in the list -->
-    <div class="todo {{ (todo.isCompleted ? 'done' : '')}}" *ngFor="let todo of todos; let i = index">
-        <input type="checkbox" (click)="toggleIsCompleted(i)">
-        <div class="description">{{ todo.description }}</div>
-
-        <button class="delete" (click)="deleteTodo(i)">
-            <i class="bi bi-trash"></i>
-        </button>
+    <div class="todo">
+        <input type="text" placeholder="description">
+        
+        <button type="radio" class="isCompleted"></button>
+        <button (click)="addTodo(description.value, isCompleted.value)">Add Todo</button>
     </div>
 </div>
